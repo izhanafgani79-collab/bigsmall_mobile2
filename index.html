@@ -1,0 +1,254 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BIG SMALL ANALYZER</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">PATTERN ANALYSIS SYSTEM</p>
+        <h1>BIG <span>SMALL</span> ANALYZER</h1>
+        <p class="sub">Track results • Study patterns • Review model indications</p>
+      </div>
+      <div class="live-tag"><i></i> LIVE ANALYSIS</div>
+    </header>
+
+    <section class="panel input-panel">
+      <div class="section-heading">
+        <div>
+          <h2>Enter Results</h2>
+          <p>Add outcomes in the exact order they occurred.</p>
+        </div>
+        <div class="counter"><strong id="count">0</strong><span> / 80</span></div>
+      </div>
+
+      <div class="input-buttons">
+        <button class="result-btn big-btn" id="addBig">BIG</button>
+        <button class="result-btn small-btn" id="addSmall">SMALL</button>
+      </div>
+
+      <div class="action-buttons">
+        <button class="secondary-btn" id="undoBtn">↶ Undo Last</button>
+        <button class="secondary-btn danger" id="resetBtn">Reset All</button>
+      </div>
+
+      <div class="sequence-wrap">
+        <div class="sequence-title">
+          <h3>Your Result History</h3>
+          <span id="sequenceInfo">No results added</span>
+        </div>
+        <div id="sequence" class="sequence">
+          <p class="empty">Your results will appear here.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="stats-grid">
+      <div class="stat-card">
+        <span>Total Results</span>
+        <strong id="totalStat">0</strong>
+      </div>
+      <div class="stat-card big-stat">
+        <span>BIG Results</span>
+        <strong id="bigStat">0</strong>
+      </div>
+      <div class="stat-card small-stat">
+        <span>SMALL Results</span>
+        <strong id="smallStat">0</strong>
+      </div>
+      <div class="stat-card">
+        <span>Current Streak</span>
+        <strong id="streakStat">—</strong>
+      </div>
+    </section>
+
+    <!-- PHASE 3: LIVE TREND GRAPH -->
+    <section class="panel">
+      <div class="section-heading">
+        <div>
+          <h2>Live Trend Graph</h2>
+          <p>Visual view of your recent BIG and SMALL results.</p>
+        </div>
+        <span class="live-label"><i></i> LIVE</span>
+      </div>
+
+      <div class="graph-controls">
+        <button class="window-btn active" data-window="10">10</button>
+        <button class="window-btn" data-window="20">20</button>
+        <button class="window-btn" data-window="40">40</button>
+      </div>
+
+      <div class="graph-legend">
+        <span><i class="legend-big"></i> BIG</span>
+        <span><i class="legend-small"></i> SMALL</span>
+      </div>
+
+      <div class="chart-wrap">
+        <svg id="trendChart" viewBox="0 0 700 260" role="img" aria-label="BIG and SMALL trend graph">
+          <text x="350" y="130" text-anchor="middle" fill="#91a0b8">Add results to see graph</text>
+        </svg>
+      </div>
+      <div class="graph-footer">
+        <span id="graphRange">Showing 0 results</span>
+        <span id="graphLatest">Latest: —</span>
+      </div>
+      <div class="graph-summary" id="graphSummary">
+        Graph analysis will appear here.
+      </div>
+    </section>
+
+    <!-- PHASE 3: SIGNAL METER -->
+    <section class="panel">
+      <div class="section-heading">
+        <div>
+          <h2>Signal Strength Meter</h2>
+          <p>Compare the model's internal BIG and SMALL scores.</p>
+        </div>
+      </div>
+
+      <div class="signal-top">
+        <div>
+          <span class="muted small-text">Current signal strength</span>
+          <div class="signal-number" id="signalNumber">0%</div>
+        </div>
+        <div id="signalStatus" class="signal-status neutral">WAITING</div>
+      </div>
+
+      <div class="meter-track">
+        <div id="signalFill" class="meter-fill"></div>
+        <div class="threshold-marker" title="15% SKIP threshold"></div>
+      </div>
+
+      <div class="meter-labels">
+        <span>0%</span>
+        <span>15% SKIP threshold</span>
+        <span>100%</span>
+      </div>
+
+      <div class="score-bars">
+        <div class="score-row">
+          <div class="score-label">
+            <strong>BIG</strong>
+            <strong id="bigScoreText">50/100</strong>
+          </div>
+          <div class="score-track">
+            <div id="bigScoreBar" class="score-fill big-fill"></div>
+          </div>
+        </div>
+
+        <div class="score-row">
+          <div class="score-label">
+            <strong>SMALL</strong>
+            <strong id="smallScoreText">50/100</strong>
+          </div>
+          <div class="score-track">
+            <div id="smallScoreBar" class="score-fill small-fill"></div>
+          </div>
+        </div>
+      </div>
+
+      <p class="notice">
+        These are internal model scores, not actual winning probabilities.
+        A score difference below 15% is marked SKIP IT.
+      </p>
+    </section>
+
+    <section class="panel">
+      <div class="section-heading">
+        <div>
+          <h2>Rolling Analysis</h2>
+          <p>Compare recent windows of results.</p>
+        </div>
+      </div>
+      <div class="rolling-grid" id="rollingGrid"></div>
+    </section>
+
+    <section class="panel">
+      <div class="section-heading">
+        <div>
+          <h2>Pattern Detection</h2>
+          <p>Patterns found in your latest results.</p>
+        </div>
+      </div>
+      <div class="pattern-grid" id="patternGrid">
+        <div class="empty-card">Add at least 5 results to start analysis.</div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="section-heading">
+        <div>
+          <h2>Historical Pattern Match</h2>
+          <p>Checks similar sequences in your earlier history.</p>
+        </div>
+      </div>
+      <div id="historyMatch" class="history-box">
+        <p class="muted">Waiting for at least 5 results.</p>
+      </div>
+    </section>
+
+    <section class="panel prediction-panel">
+      <div class="section-heading">
+        <div>
+          <h2>Next Result Indication</h2>
+          <p>A pattern-based model indication, not a guaranteed prediction.</p>
+        </div>
+      </div>
+      <div id="prediction" class="prediction-result">
+        <div class="prediction-icon">?</div>
+        <div>
+          <h3>Waiting for data</h3>
+          <p>Enter 5 results to start analysis.</p>
+        </div>
+      </div>
+      <div id="modelReason" class="reason-box">No analysis available yet.</div>
+    </section>
+
+    <section class="panel">
+      <div class="section-heading">
+        <div>
+          <h2>Model Accuracy Tracker</h2>
+          <p>Historical backtesting using only earlier results.</p>
+        </div>
+      </div>
+      <div class="accuracy-grid">
+        <div class="accuracy-card">
+          <span>Checked Predictions</span>
+          <strong id="checkedPredictions">0</strong>
+        </div>
+        <div class="accuracy-card">
+          <span>Correct</span>
+          <strong id="correctPredictions">0</strong>
+        </div>
+        <div class="accuracy-card">
+          <span>Incorrect</span>
+          <strong id="wrongPredictions">0</strong>
+        </div>
+        <div class="accuracy-card">
+          <span>Historical Hit Rate</span>
+          <strong id="accuracyRate">—</strong>
+        </div>
+      </div>
+      <p class="notice">
+        SKIP signals are excluded from the hit-rate calculation.
+        Past hit rate does not guarantee future performance.
+      </p>
+    </section>
+
+    <section class="disclaimer">
+      <strong>Important:</strong> BIG/SMALL outcomes may be random or independent.
+      Past results do not reliably determine the next result. This tool is for
+      tracking and educational analysis only.
+    </section>
+
+    <footer>BIG SMALL ANALYZER · LOCAL DATA STORAGE</footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
